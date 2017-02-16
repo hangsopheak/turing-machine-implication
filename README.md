@@ -1,4 +1,4 @@
-<h1>Turing Machine - Implication Operator<h1>
+<h1>Turing Machine - Implication Operator</h1>
 
 This source code is developed to practice the finite state machine techinque by automating input using implication operator.
 
