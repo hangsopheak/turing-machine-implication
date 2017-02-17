@@ -9,13 +9,15 @@
 	crossorigin="anonymous">
 <style>
 	.box{
-		padding:3px;
+		padding:5px;
 		border: 1px solid #eee;
 		margin:1px;
+		font-size:15px;
 	}
 
 	.active{
-		border-bottom: 5px solid #000;
+		background: #efdeae;
+		border-bottom: 8px solid #ad8924;
 	}
 
 	p{
@@ -30,7 +32,7 @@
 	<div class="row">
 		<div class="col-sm-4" >
 			<div style="position: fixed">
-				<h4>Turing Machine - Implication Operator</h4>
+			
 				<div class="form-group">
 					<label for="first-number">First Number:</label> <input type="text"
 																		   class="form-control" id="first-number">
@@ -40,6 +42,35 @@
 																			 class="form-control" id="second-number">
 				</div>
 				<button class="btn btn-primary" id="btn-result">Show Result</button>
+				<p>&nbsp;</p>
+					<h4>Turing Machine - Implication Operator</h4>
+				<table class="table table-bordered">
+					<tr>
+						<th>P</th>
+						<th>Q</th>
+						<th>P -> Q</th>
+					</tr>
+					<tr>
+						<td>T</td>
+						<td>T</td>
+						<td>T</td>
+					</tr>
+					<tr>
+						<td>T</td>
+						<td>F</td>
+						<td>F</td>
+					</tr>
+					<tr>
+						<td>F</td>
+						<td>T</td>
+						<td>T</td>
+					</tr>
+					<tr>
+						<td>F</td>
+						<td>F</td>
+						<td>T</td>
+					</tr>
+				</table>
 			</div>
 
 		</div>
@@ -74,7 +105,7 @@
 		var firstNumber = $('#first-number').val();
 		var secondNumber = $('#second-number').val();
 		if(validateInput(firstNumber, secondNumber)){
-			var reserveResultLength = 30;
+			var reserveResultLength = 20;
 			tape = generateTape(firstNumber, secondNumber, reserveResultLength);
 			var pos = reserveResultLength;
 			var state = 1;
@@ -123,11 +154,11 @@
 								pos++;
 								break;
 							case 'a':
-								state = 19;
+								state = 16;
 								pos--;
 								break;
 							case 'b':
-								state = 19;
+								state = 16;
 								pos--;
 								break;
 							default:
@@ -326,7 +357,7 @@
 								return false;
 						}
 						break;
-
+					// case false 13
 					case 13:
 						switch(ch) {
 								// true
@@ -349,7 +380,6 @@
 								return false;
 						}
 						break;
-						// case false 13
 					case 14:
 						switch(ch) {
 							case '0':
@@ -372,7 +402,7 @@
 						}
 						break;
 						// finish state
-					case 18:
+					case 15:
 						switch(ch) {
 							case 'a':
 								setCharAt(tape,pos,0) ;
@@ -394,7 +424,7 @@
 						}
 						break;
 
-					case 19:
+					case 16:
 						switch(ch) {
 							case 'a':
 								pos--;
@@ -406,7 +436,7 @@
 								pos--;
 								break;
 							case '=':
-								state = 18;
+								state = 15;
 								pos++;
 								break;
 							case '1':
@@ -439,7 +469,7 @@ function generateTape(firstNumber, secondNumber, reserveResultLength){
 	return result;
 }
 function showProcess(tape, pos, ch, state){
-	var step = '<h6> pos = ' + pos + ' / ch = ' + ch +' / state = ' + state + '</h6>';
+	var step = '<h4> state = ' + state + ' / pos = ' + pos +' / ch = ' + ch + '</h4>';
 	var str = '';
 	for(var i = 0; i<tape.length; i++){
 		var activeClass = '';
@@ -465,10 +495,14 @@ function setCharAt(str,index,chr) {
 }
 
 function validateInput(firstNumber, secondNumber){
-	if(firstNumber.length != secondNumber.length){
+	var pattern = new RegExp("^[0-1]*$");
+	if(firstNumber == '' || secondNumber == ''){
+		alert('Input cannot be empty!');
+		return false;
+	}else if(firstNumber.length != secondNumber.length){
 		alert('First number length must be equal second number length!');
 		return false;
-	} else if(!firstNumber.match(/[1,0]/g) || !secondNumber.match(/[1,0]/g)){
+	} else if(!pattern.test(firstNumber)|| !pattern.test(secondNumber)){
 		alert('Input number only allow binary number!');
 		return false;
 	} else{
